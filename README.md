@@ -22,6 +22,6 @@ MIT License
 ---
 
 Screenshot
-<img title="deployed code quiz" alt="Code Quiz" src="/assets/images/screenshot-of-deploy.jpg">
+<img title="deployed code quiz" alt="Code Quiz" src="/assets/images/code-quiz-deploy.jpg">
 
-link: https://dspnc.github.io/code-quiz
+link: https://dspnc.github.io/code-quiz/
