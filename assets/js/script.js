@@ -10,12 +10,18 @@ var homeContainerEl = document.querySelector(".home-container")
 var questionContainerEl = document.querySelector(".question-container")
 var completeContainerEl = document.querySelector(".complete-container")
 var resultEl = document.querySelector("#result")
+var initialsFormEl = document.getElementById("enter-initials")
+var scoresListEl = document.querySelector("#high-scores-list")
+var highScoreEl = document.querySelector(".high-scores-container")
+var highScoreLink = document.getElementById("high-scores")
+var clearBtn = document.getElementById("clear-scores")
+var backBtn = document.getElementById("go-back")
 
 var index = 0
 var score = 0
 
 //array to store high scores from storage
-var highScores = [];
+var highScoresList = [];
 
 //array of question/answer objects
 var quizQuestions = [
@@ -155,26 +161,104 @@ function showResult() {
     completeContainerEl.appendChild(finalScore)
 
 }
-//build the homescreen
 
-//build the question view with static data
+function addNewScore(event) {
+    event.preventDefault()
+    var initials = document.querySelector("#initials").value;
+    if (initials === '') {
+        alert("Enter your initials");
+    }
 
-//build the high score view
+    initialsFormEl.reset();
 
-//link things together (click to view high scores, show question)
+    var newScore = {
+        initials: initials,
+        score: score
+    }
 
-//create an array of questions
+    highScoresList.push(newScore)
 
-//write a function to show a question based on an index
+    while (scoresListEl.firstChild) {
+        scoresListEl.removeChild(scoresListEl.firstChild)
+    }
 
-//show questions sequentially
 
-//keep the score for the quiz
 
-//add the final score to localStorage
+    for (var i=0; i<highScoresList.length; i++) {
+        var scoreEl = document.createElement("li");
+        scoreEl.innerHTML = highScoresList[i].initials + "   ---   " + highScoresList[i].score;
+        scoresListEl.appendChild(scoreEl);
+    }
 
-//clear all scores in localStorage
+    saveScore();
 
-//css styles
+
+    displayHighScores();
+
+}
+
+
+function saveScore() {
+    localStorage.setItem("High-Scores", JSON.stringify(highScoresList))
+}
+
+function displayHighScores() {
+    homeContainerEl.classList.remove("visible")
+    homeContainerEl.classList.add("hidden")
+    highScoreEl.classList.remove("hidden")
+    highScoreEl.classList.add("visible")
+    completeContainerEl.classList.remove("visible")
+    completeContainerEl.classList.add("hidden")
+    questionContainerEl.classList.remove("visible")
+    questionContainerEl.classList.add("hidden")
+    correctEl.classList.remove("visible")
+    correctEl.classList.add("hidden")
+    wrongEl.classList.remove("visible")
+    wrongEl.classList.add("hidden")
+}
+
+function clearHighScores() {
+    highScoresList = []
+
+    while (scoresListEl.firstChild) {
+        scoresListEl.removeChild(scoresListEl.firstChild)
+    }
+    localStorage.clear(highScoresList)
+
+   
+}
+
+function loadScores() {
+    var highScores = localStorage.getItem("High-Scores");
+    if(!highScores){
+        return false;
+    }
+    highScores = JSON.parse(highScores)
+
+    for (var i=0; i<highScores.length; i++) {
+        var scoreEl = document.createElement("li");
+        scoreEl.innerHTML = highScores[i].initials + "   ---   " + highScores[i].score;
+        scoresListEl.appendChild(scoreEl);
+        highScoresList.push(highScores[i]);
+    }
+}
+
+function goBack(){
+    highScoreEl.classList.remove("visible")
+    highScoreEl.classList.add("hidden")
+    homeContainerEl.classList.remove("hidden")
+    homeContainerEl.classList.add("visible")
+    index = 0;
+    score = 0;
+    secondsLeft = 50;
+
+}
+
+loadScores()
+
 
 startBtnEl.addEventListener("click", startGame)
+initialsFormEl.addEventListener("submit", addNewScore)
+highScoreLink.addEventListener("click", displayHighScores)
+clearBtn.addEventListener("click", clearHighScores)
+backBtn.addEventListener("click", goBack)

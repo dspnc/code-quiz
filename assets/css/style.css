@@ -7,5 +7,46 @@
 }
 
 .visible {
+    display: contents;
+}
+
+header {
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 25%;
+}
+
+.home-container {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+}
+
+.question-container {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+}
+
+#question {
+    margin-bottom: 50px;
+}
+
+#correct, #wrong {
+    text-align: center;
+}
+
+.complete-container {
+    margin: auto;
+    text-align: center;
+}
+
+.high-scores-container {
+    margin: auto;
+    text-align: center;
+}
+
+#high-scores:hover {
+    cursor: pointer;
+    color: red;
 }
