@@ -1,4 +1,4 @@
-var questionBoxEl = document.getElementById('question-box');
+//query selectors set as variables for DOM manipulation below
 var timerEl = document.querySelector("#timer");
 var scoreEl = document.querySelector("#score");
 var questionEl = document.querySelector("#question")
@@ -17,7 +17,10 @@ var highScoreLink = document.getElementById("high-scores")
 var clearBtn = document.getElementById("clear-scores")
 var backBtn = document.getElementById("go-back")
 
+//index for iterating through question array, start with 0
 var index = 0
+
+//starting score set to 0
 var score = 0
 
 //array to store high scores from storage
@@ -69,7 +72,7 @@ function setTime() {
 }
 
 
-
+//hides home page and displays the question display before starting the timer and serving a new question
 function startGame() {
     homeContainerEl.classList.add("hidden")
     homeContainerEl.classList.remove("visible")
@@ -79,11 +82,13 @@ function startGame() {
     newQuestion()
 }
 
+//clears answers that may be present from previous question and shows the question based on the index
 function newQuestion() {
     removeAnswers()
     showQuestion(quizQuestions[index])
 }
 
+//removes answer button elements that were added, if any
 function removeAnswers(){
     for (var i= answerEl.children.length; i>0; i--) {
         answerEl.removeChild(answerEl.firstChild)
@@ -91,6 +96,7 @@ function removeAnswers(){
 }
 
 
+//creates answer buttons by iterating through the current index's option keys, calls checkAnswer on click
 function showQuestion(index) {
     questionEl.textContent = index.q;
     for (var i=0; i<index.options.length; i++) {
@@ -101,6 +107,7 @@ function showQuestion(index) {
     };
 };
 
+//compares the clicked answer button content to the options value that corresponds with the index. if it matches, call correctAnswer. else, WrongAnswer and adjusts score
 function checkAnswer(event) {
     var optionsChoice = event.target
     if (quizQuestions[index].a === optionsChoice.textContent){
@@ -123,6 +130,7 @@ function checkAnswer(event) {
     }
 }
 
+//shows the Correct text when an answer is clicked correctly, and hides the Wrong text
 function correctAnswer(){
     if (correctEl.className == "hidden") {
         correctEl.classList.remove("hidden")
@@ -132,6 +140,7 @@ function correctAnswer(){
     }
 }
 
+//shows the Wrong text when an answer is clicked incorrectly, and hides the Correct Text
 function wrongAnswer(){
     if (wrongEl.className == "hidden") {
         wrongEl.classList.remove("hidden")
@@ -141,6 +150,7 @@ function wrongAnswer(){
     }
 }
 
+//hides all containers and content except the complete-container content and the final score
 function showResult() {
     questionContainerEl.classList.add("hidden")
     completeContainerEl.classList.remove("hidden")
@@ -162,6 +172,8 @@ function showResult() {
 
 }
 
+//upon entering initials, adds initials and score to highScoresList, clears previous list and generates updated list with new value
+//then calls saveScore and displayHighScores
 function addNewScore(event) {
     event.preventDefault()
     var initials = document.querySelector("#initials").value;
@@ -198,10 +210,12 @@ function addNewScore(event) {
 }
 
 
+//saves highScoresList to local storage
 function saveScore() {
     localStorage.setItem("High-Scores", JSON.stringify(highScoresList))
 }
 
+//hides all but the high scores list and its container elements
 function displayHighScores() {
     homeContainerEl.classList.remove("visible")
     homeContainerEl.classList.add("hidden")
@@ -217,6 +231,7 @@ function displayHighScores() {
     wrongEl.classList.add("hidden")
 }
 
+//resets highScoresList, removes list from page and clears local storage
 function clearHighScores() {
     highScoresList = []
 
@@ -228,6 +243,7 @@ function clearHighScores() {
    
 }
 
+//loads high scores from storage and adds them to the scores list element
 function loadScores() {
     var highScores = localStorage.getItem("High-Scores");
     if(!highScores){
@@ -243,6 +259,7 @@ function loadScores() {
     }
 }
 
+//hides high score page and shows the start page with the index, score, and timer reset
 function goBack(){
     highScoreEl.classList.remove("visible")
     highScoreEl.classList.add("hidden")
@@ -254,11 +271,20 @@ function goBack(){
 
 }
 
+//loads local storage upon running
 loadScores()
 
-
+//start button to trigger timer and newQuestion
 startBtnEl.addEventListener("click", startGame)
+
+//submit button for entering initials and score
 initialsFormEl.addEventListener("submit", addNewScore)
+
+//link for View High Scores in the header
 highScoreLink.addEventListener("click", displayHighScores)
+
+//clears high scores on click
 clearBtn.addEventListener("click", clearHighScores)
+
+//goes back to start page on click
 backBtn.addEventListener("click", goBack)
