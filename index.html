@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h5 id="high-scores">View High Scores</h5>
+        <h5 class="timer">Time: <span id="timer"></span></h5>
+        <h5 class="score">Score: <span id="score"></span></h5>
+    </header>
+
+    <div class="home-container visible">
+        <h1>Javascript Quiz</h1>
+        <h2>Pick the best answer to each question</h2>
+        <div class="question-box">
+            <button id="start-btn" class="btn">
+                Start
+            </button>
+            
+        </div>
+    </div>
+
+    <div class="question-container hidden">
+        <div class="question-box">
+            <div id="question"></div>
+            <div id="answers"></div>
+        </div>
+    </div>
+
+    <div class="complete-container hidden">
+        <div class="question-box">
+            <div id="result">
+                <h1>Quiz Complete</h1>
+            </div>
+            <form id="enter-initials">
+                <p>Enter initials: 
+                    <input type="text" name="initials" id="initials">
+                    <button id="btn submit-btn">Submit</button>
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <div class="high-scores-container hidden">
+        <div class="question-box">
+            <h1>High Scores</h1>
+            <ol id="high-scores-list"></ol>
+        </div>
+        <div>
+        <button id="go-back" class="btn">Go Back</button>
+        <button id="clear-scores" class="btn">Clear High Scores</button>
+        </div>
+    </div>
+
+    <div id="correct" class="hidden">
+        <h2>Correct!</h2>
+    </div>
+    <div id="wrong" class="hidden">
+        <h2>Wrong!</h2>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
